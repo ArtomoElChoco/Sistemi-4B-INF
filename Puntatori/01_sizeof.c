@@ -5,6 +5,9 @@ int main(void){
     char c = 'c';   // 0x00A
 
     int* pi;
+    int v[] = {55,66,77};
+    printf("%p\n", v);
+    printf("%p\n", &v[2]);
     
     i = 10;
     printf("La variabile i occupa %d byte\n", sizeof(i));
