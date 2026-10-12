@@ -1,6 +1,3 @@
-
-07_vettorePalindromo.c
-100%
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -53,4 +50,3 @@ void stampaVet(int *v, int *dim)
     for(*i = 0; *i < *dim; (*i)++)
         printf("v[%d]: %d\n", *i, *(v+*i));
 }
-Visualizzazione di 07_vettorePalindromo.c.
