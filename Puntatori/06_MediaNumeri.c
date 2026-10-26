@@ -13,8 +13,10 @@ int main(void){
 	scanf("%d", n2);
 	printf("\nInserisci numero: ");
 	scanf("%d", n3);
+	
 	float* media = (float*) malloc(sizeof(float));
 	*media = (*n1+*n2+*n3)/3;
+	
 	printf("\n\nMedia dei valori: %.2f", *media);
 	
 	

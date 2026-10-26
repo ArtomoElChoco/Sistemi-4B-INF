@@ -5,6 +5,7 @@
 void visualizzaMenu(char* scelta);
 void caricaMultipli(int* vetInt, int* lunghezza, int* mult);
 int contaVocali(char* frase);
+void gnomeSort(char* v, int* n);
 
 int main(void){
 	srand(time(NULL));
@@ -12,12 +13,15 @@ int main(void){
 	char* input = (char*)malloc(sizeof(char));
 	do{
 		// system("@cls||clear");
+		fflush(stdin);
 		visualizzaMenu(input);
 		switch(*input){
 			case 'a':
 				lunghezza = (int*)malloc(sizeof(int));
-				printf("\nInserisci lunghezza del vettore: ");
-				scanf("%d", lunghezza);
+				do{
+					printf("\nInserisci lunghezza del vettore: ");
+					scanf("%d", lunghezza);
+				}while(*lunghezza < 1);
 				int* vetInt = (int*)calloc(*lunghezza, sizeof(int));
 				int* i = (int*)malloc(sizeof(int));
 				for(*i = 0; *i < *lunghezza; (*i)++){
@@ -29,9 +33,25 @@ int main(void){
 				printf("\nInserisci un multiplo: ");
 				scanf("%d", mult);
 				caricaMultipli(vetInt, lunghezza, mult);
+				getchar();
 				break;
 			case 'b':
-				printf("Addio");
+				lunghezza = (int*)malloc(sizeof(int));
+				do{
+					printf("\nInserisci lunghezza del vettore: ");
+					scanf("%d", lunghezza);
+				}while(*lunghezza < 1);
+				char* stringa = (char*)malloc(sizeof(char) * (*lunghezza));
+				i = (int*)calloc(1, sizeof(int));
+				for(; *i < *lunghezza; (*i)++){
+					*(stringa + (*i)) = (rand() % ('z' - 'a' + 1)) + 'a';
+					printf("%c", *(stringa + (*i)));
+				}
+				gnomeSort(stringa, lunghezza);
+				printf("\n\n");
+				for(*i = 0; *i < *lunghezza; (*i)++){
+					printf("%c", *(stringa + (*i)));
+				}
 				break;
 			case 'c':
 				lunghezza = (int*)malloc(sizeof(int));
@@ -45,7 +65,8 @@ int main(void){
 				while(*(frase + (*newElem)) != '\0'){
 					(*newElem)++;
 				}
-				frase = (char*)realloc(frase, sizeof(char) * (*newElem));
+				frase = (char*)realloc(frase, sizeof(char) * (*newElem + 1));
+				*(frase + (*newElem)) = '\0';
 				contaVocali(frase);
 				break;
 			case 'q':
@@ -71,17 +92,18 @@ int contaVocali(char* frase){
 		if(*(frase + (*i)) == '*'){
 			(*start)++;
 		}
-		if(*start % 2 == 0){
+		if(*start % 2 == 0 && (*(frase + (*i)) == 'a' || *(frase + (*i)) == 'e' || *(frase + (*i)) == 'i' ||
+		*(frase + (*i)) == 'o' || *(frase + (*i)) == 'u')){
 			(*cont)++;
 		}
+		(*i)++;
 	}
 	printf("\nIl totale delle vocali presenti nella sotto stringa è: %d", *cont);
 }
 
 void caricaMultipli(int* vetInt, int* lunghezza, int* mult){
 	int* vetSec = (int*)calloc(*lunghezza, sizeof(int));
-	int* newElem = (int*)malloc(sizeof(int));
-	*newElem = 0;
+	int* newElem = (int*)calloc(1, sizeof(int));
 	int* i = (int*)malloc(sizeof(int));
 	for(*i = 0; *i < *lunghezza; (*i)++){
 		if(*(vetInt + (*i)) % (*(mult)) == 0){
@@ -95,6 +117,7 @@ void caricaMultipli(int* vetInt, int* lunghezza, int* mult){
 	free(i);
 	free(mult);
 	free(vetInt);
+	free(vetSec);
 	free(newElem);
 }
 
@@ -104,4 +127,23 @@ void visualizzaMenu(char* scelta){
 	printf("c. Svolgi esercizio 3\n");
 	printf("\nq. Termina\n");
 	scanf("%c", scelta);
+}
+
+void gnomeSort(char* v, int* n)
+{
+	int* index = (int*)calloc(1, sizeof(int));
+	char* tmp = (char*)malloc(sizeof(char));
+	while (*index < *n) {
+		if (*index == 0) {
+			(*index)++;
+		}
+		if (*(v + (*index)) >= *(v + (*index - 1))) {
+			(*index)++;
+		} else {
+			*tmp = *(v + (*index));
+			*(v + (*index)) = *(v + (*index - 1));
+			*(v + (*index - 1)) = *tmp;
+			(*index)-- ;
+		}
+	}
 }
